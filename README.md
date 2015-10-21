@@ -1,2 +1,2 @@
 # my_vimrc
-My Persoonal vimrc
+My Personal vimrc
