@@ -146,6 +146,9 @@ call vundle#end()            " required
         colo xterm16   
         hi MatchParen ctermbg=DarkCyan ctermfg=white
         hi MatchParen guibg=DarkCyan guifg=white
+        hi Comment ctermbg=Black ctermfg=DarkGreen 
+        hi Comment guibg=Black guifg=DarkGreen 
+        hi Comment cterm=italic gui=italic
     " }}}
 
 if g:iswindows
