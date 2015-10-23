@@ -65,6 +65,7 @@ endif
 
 if g:islinux
     set guifont=DejaVu\ Sans\ mono\ 11     "更改字体大小，反斜线后面有个空格
+    set lines=999   "columns=118  窗口最大化
 endif
 
     source $VIMRUNTIME/vimrc_example.vim
@@ -100,7 +101,6 @@ endif
         Plugin 'mattn/emmet-vim'
         Plugin 'jiangmiao/auto-pairs'
         Plugin 'fholgado/minibufexpl.vim'
-        Plugin 'scrooloose/syntastic'
         Plugin 'bling/vim-airline'
         Plugin 'Dachow/winmanager'
         Plugin 'Dachow/visualmark'
@@ -119,6 +119,8 @@ endif
 
     if g:islinux
         Plugin 'Valloric/YouCompleteMe'
+        Plugin 'scrooloose/syntastic'
+        "Plugin 'PyCQA/flake8'
     endif
 
 " All of your Plugins must be added before the following line
@@ -147,7 +149,7 @@ call vundle#end()            " required
         hi MatchParen ctermbg=DarkCyan ctermfg=white
         hi MatchParen guibg=DarkCyan guifg=white
         hi Comment ctermbg=Black ctermfg=DarkGreen 
-        hi Comment guibg=Black guifg=DarkGreen 
+        hi Comment guibg=Black guifg=SeaGreen 
         hi Comment cterm=italic gui=italic
     " }}}
 
@@ -164,7 +166,20 @@ endif
 if g:islinux
     " YouCompleteMe {{{
         let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-    "}}}
+    " }}}
+
+    " syntastic {{{ sudo apt-get install python-pylint python-flake8
+        let g:syntastic_python_checkers = ['pylint', 'flake8']
+
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
+
+        "let g:syntastic_always_populate_loc_list = 1
+        "let g:syntastic_auto_loc_list = 1
+        "let g:syntastic_check_on_open = 1
+        "let g:syntastic_check_on_wq = 0
+    " }}}
 endif
 
 
