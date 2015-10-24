@@ -40,8 +40,11 @@ endif
 
     let mapleader = ","
     
-    " <F3>生成ctags
-    nnoremap <F3> :!ctags -R<CR>
+    " <F7>生成ctags
+    nnoremap <F7> :!ctags -R<CR>
+
+    " NERDTree & Tagbar 
+    nmap <F8> :call ToggleNERDTreeAndTagbar()<CR>
 
     set shiftwidth=4
     set expandtab
@@ -108,6 +111,7 @@ endif
         Plugin 'vim-scripts/xterm16.vim'
         Plugin 'altercation/vim-colors-solarized'
         Plugin 'majutsushi/tagbar'
+
     if g:iswindows
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
@@ -131,6 +135,7 @@ call vundle#end()            " required
         "set list lcs=tab:\|\ 
         "let g:indentLine_char = '|'
     " }}}
+
 
     " tagbar & nerdtree {{{
     let g:tagbar_width = 30
@@ -169,9 +174,8 @@ call vundle#end()            " required
         endif  
     endfor  
     endfunction
-
-    nmap <F8> :call ToggleNERDTreeAndTagbar()<CR>
     " }}}
+
 
     " xterm16 {{{
         colo xterm16   
