@@ -35,10 +35,14 @@ if g:islinux
     call vundle#begin()
 endif
 
-    "{{{ Python快捷键
+    " Python快捷键
     nnoremap <F5> :!python %
     nnoremap <F4> :!python
-    "}}}
+
+    let mapleader = ","
+    
+    " 跳转下一个窗口
+    nnoremap <C-w> <C-w>w
 
     set shiftwidth=4
     set expandtab
@@ -225,4 +229,6 @@ if g:iswindows
       silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
     endfunction
 endif
+
+
 
