@@ -8,7 +8,6 @@ if(has("win32") || has("win64") || has("win95") || has("win16"))
 else
     let g:islinux = 1
 endif
- 
 " -----------------------------------------------------------------------------
 "  < 判断是终端还是 Gvim >
 " -----------------------------------------------------------------------------
@@ -41,9 +40,6 @@ endif
 
     let mapleader = ","
     
-    " 跳转下一个窗口
-    "nnoremap <C-w> <C-w>w
-
     " <F3>生成ctags
     nnoremap <F3> :!ctags -R<CR>
 
@@ -84,7 +80,6 @@ endif
     set termencoding=utf-8
     set encoding=utf-8
 
-
 if (g:iswindows && g:isGUI)
     source $VIMRUNTIME/delmenu.vim    "解决菜单乱码
     source $VIMRUNTIME/menu.vim
@@ -100,23 +95,19 @@ endif
         " let Vundle manage Vundle, required
         Plugin 'VundleVim/Vundle.vim'
 
-
         Plugin 'Yggdroot/indentLine'
         Plugin 'scrooloose/nerdtree'
         Plugin 'Valloric/MatchTagAlways'
-        Plugin 'vim-scripts/taglist.vim'
         Plugin 'mattn/emmet-vim'
         Plugin 'jiangmiao/auto-pairs'
         Plugin 'fholgado/minibufexpl.vim'
         Plugin 'bling/vim-airline'
-        Plugin 'Dachow/winmanager'
         Plugin 'Dachow/visualmark'
         Plugin 'scrooloose/nerdcommenter'
         Plugin 'sjas/csExplorer'
         Plugin 'vim-scripts/xterm16.vim'
         Plugin 'altercation/vim-colors-solarized'
-        "Plugin 'flazz/vim-colorschemes'
-
+        Plugin 'majutsushi/tagbar'
     if g:iswindows
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
@@ -137,18 +128,49 @@ call vundle#end()            " required
     
 
     " indentLine {{{   
-        set list lcs=tab:\|\ 
-        "缩进对齐线
+        "set list lcs=tab:\|\ 
+        "let g:indentLine_char = '|'
     " }}}
 
-    " taglist {{{
-        let Tlist_Show_One_File=1
-        let Tlist_Exit_OnlyWindow=1
-    " }}}
+    " tagbar & nerdtree {{{
+    let g:tagbar_width = 30
+    let g:NERDTreeWinSize = 20
 
-    " winmanager {{{
-        let g:winManagerWindowLayout='FileExplorer|TagList'
-        nmap wm :WMToggle<cr>
+    function! ToggleNERDTreeAndTagbar()  
+    let w:jumpbacktohere = 1  
+  
+    " Detect which plugins are open  
+    if exists('t:NERDTreeBufName')  
+        let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1  
+    else  
+        let nerdtree_open = 0  
+    endif  
+    let tagbar_open = bufwinnr('__Tagbar__') != -1  
+  
+    " Perform the appropriate action  
+    if nerdtree_open && tagbar_open  
+        NERDTreeClose  
+        TagbarClose  
+    elseif nerdtree_open  
+        TagbarOpen  
+    elseif tagbar_open  
+        NERDTree  
+    else  
+        NERDTree  
+        TagbarOpen  
+    endif  
+  
+    " Jump back to the original window  
+    for window in range(1, winnr('$'))  
+        execute window . 'wincmd w'  
+        if exists('w:jumpbacktohere')  
+            unlet w:jumpbacktohere  
+            break  
+        endif  
+    endfor  
+    endfunction
+
+    nmap <F8> :call ToggleNERDTreeAndTagbar()<CR>
     " }}}
 
     " xterm16 {{{
