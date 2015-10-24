@@ -36,13 +36,16 @@ if g:islinux
 endif
 
     " Python快捷键
-    nnoremap <F5> :!python %
-    nnoremap <F4> :!python
+    nnoremap <F5> :!python %<CR>
+    nnoremap <F4> :!python<CR>
 
     let mapleader = ","
     
     " 跳转下一个窗口
-    nnoremap <C-w> <C-w>w
+    "nnoremap <C-w> <C-w>w
+
+    " <F3>生成ctags
+    nnoremap <F3> :!ctags -R<CR>
 
     set shiftwidth=4
     set expandtab
@@ -229,6 +232,3 @@ if g:iswindows
       silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
     endfunction
 endif
-
-
-
