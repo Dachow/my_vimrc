@@ -69,10 +69,18 @@ if g:iswindows
     au GUIEnter * simalt ~x " 窗口启动时自动最大化 
 endif
 
+
 if g:islinux
     set guifont=DejaVu\ Sans\ mono\ 11     "更改字体大小，反斜线后面有个空格
     set lines=999   "columns=118  窗口最大化
+    
+    " sudo apt-get install wmctrl
+    function! ToggleFullScreen()
+    call system("wmctrl -r :ACTIVE: -b toggle,fullscreen")
+    endfunction
+    map <silent> <F11> :call ToggleFullScreen()<CR>
 endif
+
 
     source $VIMRUNTIME/vimrc_example.vim
     source $VIMRUNTIME/mswin.vim
