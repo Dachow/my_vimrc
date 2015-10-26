@@ -36,7 +36,7 @@ endif
 
     " Python快捷键
     nnoremap <F5> :!python %<CR>
-    nnoremap <F4> :!python<CR>
+    nnoremap <F4> :!start python<CR>
 
     let mapleader = ","
     
@@ -44,7 +44,7 @@ endif
     nnoremap <F7> :!ctags -R<CR>
 
     " NERDTree & Tagbar 
-    nmap <F8> :call ToggleNERDTreeAndTagbar()<CR>
+    nnoremap <F8> :call ToggleNERDTreeAndTagbar()<CR>
 
     set shiftwidth=4
     set expandtab
@@ -65,7 +65,7 @@ endif
 
 if g:iswindows 
     set linespace=5    "设置行间距
-    set guifont=Consolas:h12
+    set guifont=Consolas:h11
     au GUIEnter * simalt ~x " 窗口启动时自动最大化 
 endif
 
@@ -76,7 +76,7 @@ if g:islinux
     
     " sudo apt-get install wmctrl
     function! ToggleFullScreen()
-    call system("wmctrl -r :ACTIVE: -b toggle,fullscreen")
+        call system("wmctrl -r :ACTIVE: -b toggle,fullscreen")
     endfunction
     map <silent> <F11> :call ToggleFullScreen()<CR>
 endif
@@ -123,7 +123,6 @@ endif
     if g:iswindows
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
-        "Plugin 'rkulla/pydiction'
         Plugin 'klen/python-mode'
     endif
 
@@ -140,48 +139,51 @@ call vundle#end()            " required
     
 
     " indentLine {{{   
-        "set list lcs=tab:\|\ 
         "let g:indentLine_char = '|'
+    " }}}
+    
+    " supertab {{{
+        let g:SuperTabDefaultCompletionType = "context"
     " }}}
 
 
     " tagbar & nerdtree {{{
-    let g:tagbar_width = 30
-    let g:NERDTreeWinSize = 20
+        let g:tagbar_width = 30
+        let g:NERDTreeWinSize = 20
 
-    function! ToggleNERDTreeAndTagbar()  
-    let w:jumpbacktohere = 1  
-  
-    " Detect which plugins are open  
-    if exists('t:NERDTreeBufName')  
-        let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1  
-    else  
-        let nerdtree_open = 0  
-    endif  
-    let tagbar_open = bufwinnr('__Tagbar__') != -1  
-  
-    " Perform the appropriate action  
-    if nerdtree_open && tagbar_open  
-        NERDTreeClose  
-        TagbarClose  
-    elseif nerdtree_open  
-        TagbarOpen  
-    elseif tagbar_open  
-        NERDTree  
-    else  
-        NERDTree  
-        TagbarOpen  
-    endif  
-  
-    " Jump back to the original window  
-    for window in range(1, winnr('$'))  
-        execute window . 'wincmd w'  
-        if exists('w:jumpbacktohere')  
-            unlet w:jumpbacktohere  
-            break  
-        endif  
-    endfor  
-    endfunction
+        function! ToggleNERDTreeAndTagbar()
+        let w:jumpbacktohere = 1
+
+         Detect which plugins are open
+        if exists('t:NERDTreeBufName')
+            let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1
+        else
+            let nerdtree_open = 0
+        endif
+        let tagbar_open = bufwinnr('__Tagbar__') != -1
+
+        " Perform the appropriate action
+        if nerdtree_open && tagbar_open
+            NERDTreeClose
+            TagbarClose
+        elseif nerdtree_open
+            TagbarOpen
+        elseif tagbar_open
+            NERDTree
+        else
+            NERDTree
+            TagbarOpen
+        endif
+
+        " Jump back to the original window
+        for window in range(1, winnr('$'))
+            execute window . 'wincmd w'
+            if exists('w:jumpbacktohere')
+                unlet w:jumpbacktohere
+                break
+            endif
+        endfor
+        endfunction 
     " }}}
 
 
@@ -192,13 +194,18 @@ call vundle#end()            " required
         hi Comment ctermbg=Black ctermfg=DarkGreen 
         hi Comment guibg=Black guifg=SeaGreen 
         hi Comment cterm=italic gui=italic
+
+        " Complete options (disable preview scratch window)
+        set completeopt-=preview
+        " Limit popup menu height
+        set pumheight=17
+ 
+        "每一行超过一定长度后予以提示，全局设置
+        "au BufRead,BufNewFile *.c,*.cpp,*.py match Error /\%80v.\%81v./  "红
+        "au BufRead,BufNewFile *.c,*.cpp,*.py 2match Underlined /.\%81v/  "紫
     " }}}
 
 if g:iswindows
-    " pydicition {{{
-        "let g:pydiction_location = '$VIMRUNTIME/../vimfiles/bundle/pydiction/complete-dict'
-    " }}}
-
     " neocomplete {{{
         let g:neocomplete#enable_at_startup = 1
     " }}}
