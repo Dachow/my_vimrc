@@ -148,7 +148,7 @@ call vundle#end()            " required
 
 
     " tagbar & nerdtree {{{
-        "let g:tagbar_width = 30
+        let g:tagbar_width = 37
         "let g:NERDTreeWinSize = 20
 
         function! ToggleNERDTreeAndTagbar()
