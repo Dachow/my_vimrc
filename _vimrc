@@ -209,6 +209,10 @@ if g:iswindows
     " neocomplete {{{
         let g:neocomplete#enable_at_startup = 1
     " }}}
+
+    " pymode {{{
+        let g:pymode_lint_cwindow = 0
+    " }}}
 endif
 
 if g:islinux
