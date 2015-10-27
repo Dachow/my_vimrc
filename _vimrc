@@ -97,6 +97,11 @@ if (g:iswindows && g:isGUI)
     language messages zh_CN.utf-8    "解决consle输出乱码
 endif
 
+    " Complete options (disable preview scratch window)
+    set completeopt-=preview
+    " Limit popup menu height
+    set pumheight=17
+
 " }}} Basic options end
 
 
@@ -109,27 +114,29 @@ endif
         Plugin 'Yggdroot/indentLine'
         Plugin 'scrooloose/nerdtree'
         Plugin 'Valloric/MatchTagAlways'
-        Plugin 'mattn/emmet-vim'
+        "Plugin 'mattn/emmet-vim'
         Plugin 'jiangmiao/auto-pairs'
         Plugin 'fholgado/minibufexpl.vim'
         Plugin 'bling/vim-airline'
         Plugin 'Dachow/visualmark'
         Plugin 'scrooloose/nerdcommenter'
-        Plugin 'sjas/csExplorer'
+        "Plugin 'sjas/csExplorer'
         Plugin 'vim-scripts/xterm16.vim'
         Plugin 'altercation/vim-colors-solarized'
         Plugin 'majutsushi/tagbar'
+        Plugin 'Shougo/vimshell.vim'
+        Plugin 'klen/python-mode'
+        Plugin 'Shougo/vimproc.vim'
 
     if g:iswindows
+        Plugin 'davidhalter/jedi-vim'
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
-        Plugin 'klen/python-mode'
     endif
 
     if g:islinux
         Plugin 'Valloric/YouCompleteMe'
-        Plugin 'scrooloose/syntastic'
-        "Plugin 'PyCQA/flake8'
+        "Plugin 'scrooloose/syntastic'
     endif
 
 " All of your Plugins must be added before the following line
@@ -141,11 +148,6 @@ call vundle#end()            " required
     " indentLine {{{   
         "let g:indentLine_char = '|'
     " }}}
-    
-    " supertab {{{
-        let g:SuperTabDefaultCompletionType = "context"
-    " }}}
-
 
     " tagbar & nerdtree {{{
         let g:tagbar_width = 37
@@ -194,43 +196,40 @@ call vundle#end()            " required
         hi Comment ctermbg=Black ctermfg=DarkGreen 
         hi Comment guibg=Black guifg=SeaGreen 
         hi Comment cterm=italic gui=italic
-
-        " Complete options (disable preview scratch window)
-        set completeopt-=preview
-        " Limit popup menu height
-        set pumheight=17
- 
-        "每一行超过一定长度后予以提示，全局设置
-        "au BufRead,BufNewFile *.c,*.cpp,*.py match Error /\%80v.\%81v./  "红
-        "au BufRead,BufNewFile *.c,*.cpp,*.py 2match Underlined /.\%81v/  "紫
-    " }}}
-
-if g:iswindows
-    " neocomplete {{{
-        let g:neocomplete#enable_at_startup = 1
     " }}}
 
     " pymode {{{
+        let g:pymode_rope_completion = 0
         let g:pymode_lint_cwindow = 0
+    " }}}
+    
+
+if g:iswindows
+    " supertab {{{
+        let g:SuperTabDefaultCompletionType = "context"
+    " }}}
+
+    " neocomplete & jedi & eclim {{{
+        let g:neocomplete#enable_at_startup = 1
+
+        autocmd FileType python setlocal omnifunc=jedi#completions
+        let g:jedi#completions_enabled = 0
+        let g:jedi#auto_vim_configuration = 0
+        let g:jedi#smart_auto_mappings = 0
+
+        if !exists('g:neocomplete#force_omni_input_patterns')
+          let g:neocomplete#force_omni_input_patterns = {}
+        endif
+
+        let g:neocomplete#force_omni_input_patterns.python =
+        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+        " Alternative pattern: \ '\h\w*\|[^. \t]\.\w*'
     " }}}
 endif
 
 if g:islinux
     " YouCompleteMe {{{
         let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-    " }}}
-
-    " syntastic {{{ sudo apt-get install python-pylint python-flake8
-        let g:syntastic_python_checkers = ['pylint', 'flake8']
-
-        set statusline+=%#warningmsg#
-        set statusline+=%{SyntasticStatuslineFlag()}
-        set statusline+=%*
-
-        "let g:syntastic_always_populate_loc_list = 1
-        "let g:syntastic_auto_loc_list = 1
-        "let g:syntastic_check_on_open = 1
-        "let g:syntastic_check_on_wq = 0
     " }}}
 endif
 
@@ -251,6 +250,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+if g:iswindows
 function MyDiff()
    let opt = '-a --binary '
    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -279,3 +279,4 @@ function MyDiff()
      let &shellxquote=l:shxq_sav
    endif
 endfunction
+endif
