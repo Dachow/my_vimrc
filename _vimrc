@@ -23,7 +23,6 @@ endif
     set nocompatible              " be iMproved, required
     filetype off                  " required
 
-
 if g:iswindows
     set rtp+=$VIMRUNTIME/../vimfiles/bundle/Vundle.vim/
     call vundle#begin('$VIMRUNTIME/../vimfiles/bundle')
@@ -83,6 +82,7 @@ endif
     source $VIMRUNTIME/vimrc_example.vim
     source $VIMRUNTIME/mswin.vim
     behave mswin
+    set nobackup
 
     set fileencoding=chinese
     set fileencodings=utf-8,chinese,latin-1
@@ -108,7 +108,6 @@ endif
 
         " let Vundle manage Vundle, required
         Plugin 'VundleVim/Vundle.vim'
-
         Plugin 'Yggdroot/indentLine'
         Plugin 'scrooloose/nerdtree'
         Plugin 'Valloric/MatchTagAlways'
@@ -117,14 +116,14 @@ endif
         Plugin 'fholgado/minibufexpl.vim'
         Plugin 'bling/vim-airline'
         Plugin 'Dachow/visualmark'
-        Plugin 'scrooloose/nerdcommenter'
+        "Plugin 'scrooloose/nerdcommenter'
         "Plugin 'sjas/csExplorer'
         Plugin 'vim-scripts/xterm16.vim'
-        Plugin 'altercation/vim-colors-solarized'
         Plugin 'majutsushi/tagbar'
-        Plugin 'Shougo/vimshell.vim'
         Plugin 'klen/python-mode'
-        Plugin 'Shougo/vimproc.vim'
+        "Plugin 'altercation/vim-colors-solarized'
+        "Plugin 'tomasr/molokai'
+        Plugin 'tyru/open-browser.vim'
 
     if g:iswindows
         Plugin 'davidhalter/jedi-vim'
@@ -154,7 +153,7 @@ call vundle#end()            " required
         function! ToggleNERDTreeAndTagbar()
         let w:jumpbacktohere = 1
 
-         Detect which plugins are open
+        Detect which plugins are open
         if exists('t:NERDTreeBufName')
             let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1
         else
@@ -203,18 +202,6 @@ call vundle#end()            " required
         let g:pymode_lint_cwindow = 0
     " }}}
     
-    " open or close vimshell {{{
-    function! ToggleVimShellPop()
-        if exists("g:VimShellPop")
-            :VimShellClose
-        else
-            :VimShellPop
-        endif 
-    endfunction
-
-    nnoremap <F10> :call ToggleVimShellPop()<CR>
-    " }}}
-
 if g:iswindows
     " supertab {{{
         let g:SuperTabDefaultCompletionType = "context"
@@ -238,6 +225,7 @@ if g:iswindows
     " }}}
 endif
 
+
 if g:islinux
     " YouCompleteMe {{{
         let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
@@ -251,15 +239,75 @@ endif
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
+
 " Put your non-Plugin stuff after this line
+
+"新建.c,.h,.sh,.java文件，自动插入文件头 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()" 
+""定义函数SetTitle，自动插入文件头 
+func SetTitle() 
+    "如果文件类型为.sh文件 
+    if &filetype == 'sh' 
+        call setline(1,"\#########################################################################") 
+        call append(line("."), "\# File Name: ".expand("%")) 
+        call append(line(".")+1, "\# Author: xiaoFen") 
+        call append(line(".")+2, "\# Mail: hellowd93@163.com") 
+        call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
+        call append(line(".")+4, "\# Last modified: ".strftime("%Y-%m-%d %X"))
+        call append(line(".")+5, "\#########################################################################") 
+        call append(line(".")+6, "\#!/bin/bash") 
+        call append(line(".")+7, "") 
+    else 
+        call setline(1, "/*************************************************************************") 
+        call append(line("."), "    > File Name: ".expand("%")) 
+        call append(line(".")+1, "    > Author: xiaoFen") 
+        call append(line(".")+2, "    > Mail: hellowd93@163.com ") 
+        call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
+        call append(line(".")+4, "    > Last modified: ".strftime("%Y-%m-%d %X"))
+        call append(line(".")+5, " ************************************************************************/") 
+        call append(line(".")+6, "")
+    endif
+    if &filetype == 'cpp'
+        call append(line(".")+7, "#include<iostream>")
+        call append(line(".")+8, "using namespace std;")
+        call append(line(".")+9, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+7, "#include<stdio.h>")
+        call append(line(".")+8, "")
+    endif
+endfunc
+
+" python 文件头
+autocmd BufNewFile *.py exec ":call SetPyTitle()" 
+func SetPyTitle() 
+        call setline(1, "# !sur/bin/env python") 
+        call append(line("."), "# -*-coding=utf-8-*-") 
+        call append(line(".")+1, "# -------------------------------------------------------------------------") 
+        call append(line(".")+2, "#    > File Name: ".expand("%")) 
+        call append(line(".")+3, "#    > Author: xiaoFen") 
+        call append(line(".")+4, "#    > Mail: hellowd93@163.com") 
+        call append(line(".")+5, "#    > Created Time: ".strftime("%c")) 
+        call append(line(".")+6, "#    > Last modified: ".strftime("%Y-%m-%d %X"))
+        call append(line(".")+7, "# -------------------------------------------------------------------------") 
+        call append(line(".")+8, "")
+endfunc
+
+""实现上面函数中的，Last modified功能
+"""""""""""""""""""""""""""""""""""""""""
+autocmd BufWrite,BufWritePre,FileWritePre *.cpp,*.[ch],*.sh,*.java,*.py    ks|call LastModified()|'s  
+func LastModified()
+	if line("$") > 20
+		let l = 20
+	else 
+		let l = line("$")
+	endif
+	exe "1,".l."g/Last modified: /s/Last modified: .*/Last modified:".
+			\strftime(" %Y-%m-%d %X" ) . "/e"
+endfunc
+
+"新建文件后，自动定位到文件末尾
+autocmd BufNewFile * normal G
 
 if g:iswindows
 function MyDiff()
