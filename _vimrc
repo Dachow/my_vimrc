@@ -67,6 +67,7 @@ endif
 
 
 if g:islinux
+    set linespace=3
     set guifont=DejaVu\ Sans\ mono\ 11     "更改字体大小，反斜线后面有个空格
     set lines=999   "columns=118  窗口最大化
     
@@ -124,17 +125,11 @@ endif
         "Plugin 'altercation/vim-colors-solarized'
         "Plugin 'tomasr/molokai'
         Plugin 'tyru/open-browser.vim'
-
-    if g:iswindows
         Plugin 'davidhalter/jedi-vim'
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
-    endif
-
-    if g:islinux
-        Plugin 'Valloric/YouCompleteMe'
+        "Plugin 'Valloric/YouCompleteMe'
         "Plugin 'scrooloose/syntastic'
-    endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -147,8 +142,13 @@ call vundle#end()            " required
     " }}}
 
     " tagbar & nerdtree {{{
-        let g:tagbar_width = 37
-        "let g:NERDTreeWinSize = 20
+        if g:iswindows
+            let g:tagbar_width = 37
+        endif
+        if g:islinux
+            let g:NERDTreeWinSize = 23
+            let g:tagbar_width = 28
+        endif
 
         function! ToggleNERDTreeAndTagbar()
         let w:jumpbacktohere = 1
@@ -202,7 +202,6 @@ call vundle#end()            " required
         let g:pymode_lint_cwindow = 0
     " }}}
     
-if g:iswindows
     " supertab {{{
         let g:SuperTabDefaultCompletionType = "context"
     " }}}
@@ -223,14 +222,13 @@ if g:iswindows
         \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
         " Alternative pattern: \ '\h\w*\|[^. \t]\.\w*'
     " }}}
-endif
 
 
-if g:islinux
+"if g:islinux
     " YouCompleteMe {{{
-        let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+    "    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
     " }}}
-endif
+"endif
 
 
 " Plugin settings end }}}
@@ -281,7 +279,7 @@ endfunc
 " python 文件头
 autocmd BufNewFile *.py exec ":call SetPyTitle()" 
 func SetPyTitle() 
-        call setline(1, "# !sur/bin/env python") 
+        call setline(1, "# !usr/bin/env python") 
         call append(line("."), "# -*-coding=utf-8-*-") 
         call append(line(".")+1, "# -------------------------------------------------------------------------") 
         call append(line(".")+2, "#    > File Name: ".expand("%")) 
