@@ -43,9 +43,6 @@ endif
     " <F7>Éú³Éctags
     nnoremap <F7> :!ctags -R<CR>
 
-    " NERDTree & Tagbar 
-    nnoremap <F8> :call ToggleNERDTreeAndTagbar()<CR>
-
     set shiftwidth=4
     set expandtab
     "set t_Co=256
@@ -78,6 +75,7 @@ if g:islinux
     function! ToggleFullScreen()
         call system("wmctrl -r :ACTIVE: -b toggle,fullscreen")
     endfunction
+
     map <silent> <F11> :call ToggleFullScreen()<CR>
 endif
 
@@ -186,6 +184,8 @@ call vundle#end()            " required
             endif
         endfor
         endfunction 
+
+        nnoremap <F8> :call ToggleNERDTreeAndTagbar()<CR>
     " }}}
 
 
@@ -203,6 +203,17 @@ call vundle#end()            " required
         let g:pymode_lint_cwindow = 0
     " }}}
     
+    " open or close vimshell {{{
+    function! ToggleVimShellPop()
+        if exists("g:VimShellPop")
+            :VimShellClose
+        else
+            :VimShellPop
+        endif 
+    endfunction
+
+    nnoremap <F10> :call ToggleVimShellPop()<CR>
+    " }}}
 
 if g:iswindows
     " supertab {{{
