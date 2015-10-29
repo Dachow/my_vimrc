@@ -200,6 +200,7 @@ call vundle#end()            " required
     " pymode {{{
         let g:pymode_rope_completion = 0
         let g:pymode_lint_cwindow = 0
+        let g:pymode_rope = 0
     " }}}
     
     " supertab {{{
@@ -277,18 +278,18 @@ func SetTitle()
 endfunc
 
 " python 文件头
-autocmd BufNewFile *.py exec ":call SetPyTitle()" 
-func SetPyTitle() 
-        call setline(1, "# !usr/bin/env python") 
-        call append(line("."), "# -*-coding=utf-8-*-") 
-        call append(line(".")+1, "# -------------------------------------------------------------------------") 
-        call append(line(".")+2, "#    > File Name: ".expand("%")) 
-        call append(line(".")+3, "#    > Author: xiaoFen") 
-        call append(line(".")+4, "#    > Mail: hellowd93@163.com") 
-        call append(line(".")+5, "#    > Created Time: ".strftime("%c")) 
-        call append(line(".")+6, "#    > Last modified: ".strftime("%Y-%m-%d %X"))
-        call append(line(".")+7, "# -------------------------------------------------------------------------") 
-        call append(line(".")+8, "")
+autocmd BufNewFile *.py exec ":call SetPyTitle()"
+func SetPyTitle()
+    call setline(1, "#!/usr/bin/env python")
+    call append(line("."), "# -*- coding: utf-8 -*-")
+    call append(line(".")+1, "# -------------------------------------------------------------------------")
+    call append(line(".")+2, "#    > File Name: ".expand("%"))
+    call append(line(".")+3, "#    > Author: xiaoFen")
+    call append(line(".")+4, "#    > Mail: hellowd93@163.com")
+    call append(line(".")+5, "#    > Created Time: ".strftime("%Y-%m-%d %X"))
+    call append(line(".")+6, "#    > Last modified: ".strftime("%Y-%m-%d %X"))
+    call append(line(".")+7, "# -------------------------------------------------------------------------")
+    call append(line(".")+8, "")
 endfunc
 
 ""实现上面函数中的，Last modified功能
