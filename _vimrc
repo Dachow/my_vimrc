@@ -252,7 +252,7 @@ func SetTitle()
         call append(line(".")+1, "\# Author: xiaoFen") 
         call append(line(".")+2, "\# Mail: hellowd93@163.com") 
         call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-        call append(line(".")+4, "\# Last modified: ".strftime("%Y-%m-%d %X"))
+        call append(line(".")+4, "\# Last Modified: ".strftime("%Y-%m-%d %X"))
         call append(line(".")+5, "\#########################################################################") 
         call append(line(".")+6, "\#!/bin/bash") 
         call append(line(".")+7, "") 
@@ -262,7 +262,7 @@ func SetTitle()
         call append(line(".")+1, "    > Author: xiaoFen") 
         call append(line(".")+2, "    > Mail: hellowd93@163.com ") 
         call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
-        call append(line(".")+4, "    > Last modified: ".strftime("%Y-%m-%d %X"))
+        call append(line(".")+4, "    > Last Modified: ".strftime("%Y-%m-%d %X"))
         call append(line(".")+5, " ************************************************************************/") 
         call append(line(".")+6, "")
     endif
@@ -287,7 +287,7 @@ func SetPyTitle()
     call append(line(".")+3, "#    > Author: xiaoFen")
     call append(line(".")+4, "#    > Mail: hellowd93@163.com")
     call append(line(".")+5, "#    > Created Time: ".strftime("%Y-%m-%d %X"))
-    call append(line(".")+6, "#    > Last modified: ".strftime("%Y-%m-%d %X"))
+    call append(line(".")+6, "#    > Last Modified: ".strftime("%Y-%m-%d %X"))
     call append(line(".")+7, "# -------------------------------------------------------------------------")
     call append(line(".")+8, "")
 endfunc
@@ -301,7 +301,7 @@ func LastModified()
 	else 
 		let l = line("$")
 	endif
-	exe "1,".l."g/Last modified: /s/Last modified: .*/Last modified:".
+	exe "1,".l."g/Last Modified: /s/Last Modified: .*/Last Modified:".
 			\strftime(" %Y-%m-%d %X" ) . "/e"
 endfunc
 
