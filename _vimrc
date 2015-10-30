@@ -42,6 +42,12 @@ endif
     " <F7>Éú³Éctags
     nnoremap <F7> :!ctags -R<CR>
 
+    " »º³åÇøÓ³Éä
+    nnoremap [b :bprevious<CR>
+    nnoremap ]b :bnext<CR>
+    nnoremap [B :bfirst<CR>
+    nnoremap ]B :blast<CR>
+
     set shiftwidth=4
     set expandtab
     "set t_Co=256
