@@ -48,6 +48,9 @@ endif
     nnoremap [B :bfirst<CR>
     nnoremap ]B :blast<CR>
 
+    "inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+    "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
     set shiftwidth=4
     set expandtab
     "set t_Co=256
@@ -122,7 +125,7 @@ endif
         Plugin 'jiangmiao/auto-pairs'
         Plugin 'fholgado/minibufexpl.vim'
         Plugin 'bling/vim-airline'
-        Plugin 'Dachow/visualmark'
+        "Plugin 'Dachow/visualmark'
         "Plugin 'scrooloose/nerdcommenter'
         "Plugin 'sjas/csExplorer'
         Plugin 'vim-scripts/xterm16.vim'
@@ -130,18 +133,26 @@ endif
         Plugin 'klen/python-mode'
         "Plugin 'altercation/vim-colors-solarized'
         "Plugin 'tomasr/molokai'
-        Plugin 'tyru/open-browser.vim'
+        "Plugin 'tyru/open-browser.vim'
         Plugin 'davidhalter/jedi-vim'
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
+        "Plugin 'asins/vimcdoc'
         "Plugin 'Valloric/YouCompleteMe'
         "Plugin 'scrooloose/syntastic'
+        Plugin 'easymotion/vim-easymotion'
+        Plugin 'kshenoy/vim-signature'
+        "Plugin 'SirVer/ultisnips'
+        Plugin 'kien/ctrlp.vim'
+        Plugin 'Shougo/neosnippet'
+        Plugin 'Shougo/neosnippet-snippets'
+        "Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
     " }}} Vundle end
-    
+
 
     " indentLine {{{   
         "let g:indentLine_char = '|'
@@ -193,7 +204,6 @@ call vundle#end()            " required
         nnoremap <F8> :call ToggleNERDTreeAndTagbar()<CR>
     " }}}
 
-
     " xterm16 {{{
         colo xterm16   
         hi MatchParen ctermbg=DarkCyan ctermfg=white
@@ -213,23 +223,41 @@ call vundle#end()            " required
         let g:SuperTabDefaultCompletionType = "context"
     " }}}
 
-    " neocomplete & jedi & eclim {{{
+    " neocomplete & jedi {{{
         let g:neocomplete#enable_at_startup = 1
 
         autocmd FileType python setlocal omnifunc=jedi#completions
         let g:jedi#completions_enabled = 0
         let g:jedi#auto_vim_configuration = 0
         let g:jedi#smart_auto_mappings = 0
-
+    
         if !exists('g:neocomplete#force_omni_input_patterns')
           let g:neocomplete#force_omni_input_patterns = {}
         endif
-
         let g:neocomplete#force_omni_input_patterns.python =
         \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
         " Alternative pattern: \ '\h\w*\|[^. \t]\.\w*'
     " }}}
 
+    " neosnippet {{{
+        " Plugin key-mappings.
+        imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+        smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+        xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+        " SuperTab like snippets behavior.
+        "imap <expr><TAB>
+        " \ pumvisible() ? "\<C-n>" :
+        " \ neosnippet#expandable_or_jumpable() ?
+        " \    "\<TAB>" : "\<Plug>(neosnippet_expand_or_jump)"
+        smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+        \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+        " For conceal markers.
+        if has('conceal')
+          set conceallevel=2 concealcursor=niv
+        endif
+    " }}}
 
 "if g:islinux
     " YouCompleteMe {{{
