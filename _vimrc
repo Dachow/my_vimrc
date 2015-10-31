@@ -74,8 +74,8 @@ endif
 
 if g:iswindows 
     set linespace=5    "设置行间距
-    set guifont=Microsoft_Yahei_Mono:h11
-    "set guifontwide=
+    set guifont=Consolas:h11
+    set guifontwide=YouYuan:h11
     au GUIEnter * simalt ~x " 窗口启动时自动最大化 
 endif
 
