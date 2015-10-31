@@ -48,6 +48,10 @@ endif
     nnoremap [B :bfirst<CR>
     nnoremap ]B :blast<CR>
 
+    " <c-o>跳到下一行并插入
+    imap <c-o> <c-o>o
+    
+
     "inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
     "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
@@ -70,14 +74,15 @@ endif
 
 if g:iswindows 
     set linespace=5    "设置行间距
-    set guifont=Consolas:h11
+    set guifont=Microsoft_Yahei_Mono:h11
+    "set guifontwide=
     au GUIEnter * simalt ~x " 窗口启动时自动最大化 
 endif
 
 
 if g:islinux
     set linespace=3
-    set guifont=DejaVu\ Sans\ mono\ 11     "更改字体大小，反斜线后面有个空格
+    set guifont=DejaVu\ Sans\ Mono\ 11     "更改字体大小，反斜线后面有个空格
     set lines=999   "columns=118  窗口最大化
     
     " sudo apt-get install wmctrl
