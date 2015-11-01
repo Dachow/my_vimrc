@@ -48,9 +48,9 @@ endif
     nnoremap [B :bfirst<CR>
     nnoremap ]B :blast<CR>
 
-    " <c-o>跳到下一行并插入
-    imap <c-o> <c-o>o
-    
+    " 插入模式跳到下边、左边和右边
+    imap <c-o> <c-[>o
+    imap <c-l> <c-[>la
 
     "inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
     "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
