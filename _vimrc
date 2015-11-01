@@ -206,6 +206,9 @@ call vundle#end()            " required
         endfor
         endfunction 
 
+        " close NERDTree with vim
+        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
         nnoremap <F8> :call ToggleNERDTreeAndTagbar()<CR>
     " }}}
 
