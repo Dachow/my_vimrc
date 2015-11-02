@@ -52,6 +52,10 @@ endif
     imap <c-o> <c-[>o
     imap <c-l> <c-[>la
 
+    " U 来撤销u的回退 <c-r>撤销对整行的更改
+    nnoremap U <c-r>
+    nnoremap <c-r> U
+
     "inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
     "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
@@ -66,9 +70,9 @@ endif
 if g:isGUI
     set guioptions-=m " 隐藏菜单栏 
     set guioptions-=T " 隐藏工具栏 
-    "set guioptions-=L " 隐藏左侧滚动条 
-    "set guioptions-=r " 隐藏右侧滚动条 
-    "set guioptions-=b " 隐藏底部滚动条 
+    set guioptions-=L " 隐藏左侧滚动条 
+    set guioptions-=r " 隐藏右侧滚动条 
+    set guioptions-=b " 隐藏底部滚动条 
     "set showtabline=0 " 隐藏Tab栏
 endif
 
@@ -152,6 +156,7 @@ endif
         Plugin 'Shougo/neosnippet'
         Plugin 'Shougo/neosnippet-snippets'
         "Plugin 'honza/vim-snippets'
+        Plugin 'kristijanhusak/vim-hybrid-material'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -165,7 +170,8 @@ call vundle#end()            " required
 
     " tagbar & nerdtree {{{
         if g:iswindows
-            let g:tagbar_width = 37
+            let g:NERDTreeWinSize = 31
+            let g:tagbar_width = 40
         endif
         if g:islinux
             let g:NERDTreeWinSize = 23
@@ -212,12 +218,19 @@ call vundle#end()            " required
         nnoremap <F8> :call ToggleNERDTreeAndTagbar()<CR>
     " }}}
 
-    " xterm16 {{{
+    " colo {{{
+    if g:isGUI
+        colo hybrid_material
+        "colo hybrid_reverse
+        hi SignColumn guibg=#263238
+        hi Folded guibg=#171717 guifg=#999999
+    else
         colo xterm16   
         hi MatchParen ctermbg=DarkCyan ctermfg=white
         hi MatchParen guibg=DarkCyan guifg=white
         hi Comment ctermbg=Black ctermfg=DarkGreen 
         hi Comment guibg=Black guifg=SeaGreen 
+    endif
         hi Comment cterm=italic gui=italic
     " }}}
 
