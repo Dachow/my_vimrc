@@ -130,7 +130,7 @@ endif
         Plugin 'Yggdroot/indentLine'
         Plugin 'scrooloose/nerdtree'
         Plugin 'Valloric/MatchTagAlways'
-        "Plugin 'mattn/emmet-vim'
+        Plugin 'mattn/emmet-vim'
         Plugin 'jiangmiao/auto-pairs'
         Plugin 'fholgado/minibufexpl.vim'
         Plugin 'bling/vim-airline'
@@ -157,6 +157,8 @@ endif
         Plugin 'Shougo/neosnippet-snippets'
         "Plugin 'honza/vim-snippets'
         Plugin 'kristijanhusak/vim-hybrid-material'
+        "Plugin 'skammer/vim-css-color'
+        Plugin 'sheerun/vim-polyglot'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
