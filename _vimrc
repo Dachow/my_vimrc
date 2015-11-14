@@ -33,6 +33,9 @@ if g:islinux
     call vundle#begin()
 endif
 
+    " µ÷ÓÃchrome
+    nnoremap <F2> :!start chrome %<CR>
+
     " Python¿ì½Ý¼ü
     nnoremap <F5> :!python %<CR>
     nnoremap <F4> :!start python<CR>
@@ -103,7 +106,7 @@ endif
     behave mswin
     set nobackup
 
-    set fileencoding=chinese
+    "set fileencoding=chinese
     set fileencodings=utf-8,chinese,latin-1
     set termencoding=utf-8
     set encoding=utf-8
@@ -168,6 +171,10 @@ call vundle#end()            " required
 
     " indentLine {{{   
         "let g:indentLine_char = '|'
+    " }}}
+    
+    " emmet {{{
+        "let g:user_emmet_expandabbr_key = '<Tab>'
     " }}}
 
     " tagbar & nerdtree {{{
