@@ -142,11 +142,11 @@ endif
         "Plugin 'sjas/csExplorer'
         Plugin 'vim-scripts/xterm16.vim'
         Plugin 'majutsushi/tagbar'
-        Plugin 'klen/python-mode'
+        "Plugin 'klen/python-mode'
         "Plugin 'altercation/vim-colors-solarized'
         "Plugin 'tomasr/molokai'
         "Plugin 'tyru/open-browser.vim'
-        Plugin 'davidhalter/jedi-vim'
+        "Plugin 'davidhalter/jedi-vim'
         Plugin 'ervandew/supertab'
         Plugin 'Shougo/neocomplete.vim'
         "Plugin 'asins/vimcdoc'
@@ -165,6 +165,7 @@ endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
 
     " }}} Vundle end
 
