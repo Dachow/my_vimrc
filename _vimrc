@@ -230,14 +230,19 @@ imap <c-l> <Right>
 imap <c-o> <c-[>o
 
 " 调用chrome
-nnoremap <F2> :!start chrome %<CR>
+if g:islinux
+    nnoremap <F2> :!google-chrome %<CR>
+endif
+if g:iswindows
+    nnoremap <F2> :!start chrome %<CR>
+endif
 
 " Python快捷键
 nnoremap <F5> :!python %<CR>
 nnoremap <F4> :!start python<CR>
 
 " <F7>生成ctags
-nnoremap <F9> :!ctags -R<CR>
+nnoremap <F7> :!ctags -R<CR>
 
 " 缓冲区映射
 nnoremap [b :bprevious<CR>
@@ -261,12 +266,12 @@ set laststatus=2                                      "启用状态栏信息
 " set cursorline                                        "突出显示当前行
 set nowrap                                            "设置不自动换行
 set linespace=5                                       "设置行间距
-set guifont=Consolas:h11                              "设置字体字号
-set guifontwide=YouYuan:h11
 " set shortmess=atI                                     "去掉欢迎界面
 
 " 设置 gVim 窗口初始位置及大小
-if g:isGUI
+if g:iswindows
+    set guifont=Consolas:h11                              "设置字体字号
+    set guifontwide=YouYuan:h11
     " au GUIEnter * simalt ~x                           "窗口启动时自动最大化
     winpos 100 10                                     "指定窗口出现的位置，坐标原点在屏幕左上角
     set lines=38 columns=120                          "指定窗口大小，lines为高度，columns为宽度
@@ -275,7 +280,7 @@ endif
 if g:islinux
     set linespace=3
     set guifont=DejaVu\ Sans\ Mono\ 11     "更改字体大小，反斜线后面有个空格
-    set lines=999   "columns=118  窗口最大化
+    set lines=999  columns=100  "窗口最大化
     " sudo apt-get install wmctrl
     function! ToggleFullScreen()
         call system("wmctrl -r :ACTIVE: -b toggle,fullscreen")
@@ -488,8 +493,8 @@ let NERDSpaceDelims = 1                     "在左注释符之后，右注释�
 " -----------------------------------------------------------------------------
 " 有目录村结构的文件浏览插件
 
-" 常规模式下输入 F2 调用插件
-nmap <F7> :NERDTreeToggle<CR>
+" 常规模式下输入 F9 调用插件
+nmap <F9> :NERDTreeToggle<CR>
 
 " -----------------------------------------------------------------------------
 "  < nerdtree & tagbar 插件配置 >
